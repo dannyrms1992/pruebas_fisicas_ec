@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pruebas_fisicas_ec/helpers/colors/colors.dart';
-import 'package:pruebas_fisicas_ec/helpers/texts/texts.dart';
+import '../../helpers/export.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({super.key});
@@ -8,70 +7,56 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-              width: double.infinity,
-              height: 350,
-              color: Colors.red,
-            ),
+            // AQUI SE VISUALIZAN LOS DIFERENTES Swippers, las imagenes vienen de helpers/images/welcome.images.dart
             Expanded(
-              child: Container(
-                child: Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                           Text(
-                            welcomeText1,
-                            style: TextStyle(fontSize: 14),
-                          ),
-                         const  SizedBox(
-                            height: 10,
-                          ),
-                           Text(
-                            welcomeText2,
-                            style: TextStyle(
-                                fontSize: 22, fontWeight: FontWeight.bold),
-                          ),
-                           SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                      Container(
-                        width: double.infinity,
-                        height: 60,
-                        decoration:const BoxDecoration(
-                            color: colorButtonWelcome,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(10.0))),
-                        child:  Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              welcomeTextButton1,
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 20),
-                            ),
-                          const  SizedBox(
-                              width: 5,
-                            ),
-                          const  Icon(Icons.arrow_forward_ios_sharp)
-                          ],
-                        ),
-                      )
-                    ],
+              child: Swiper(
+                itemBuilder: (BuildContext context, int index) {
+                  return Image.asset(
+                    welcomeImagesPaths[index],
+                    fit: BoxFit.fill,
+                  );
+                },
+                itemCount: welcomeImagesPaths.length,
+                viewportFraction: 0.8,
+                scale: 0.9,
+                autoplay: true,
+              ),
+            ),
+            // Widget que contiene los botones de iniciar sesion y de unirse
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 15, right: 15, top: 55, bottom: 55),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  //boton de registrarse
+                  ElevatedButton(
+                      style: welcomeButtonStyle1,
+                      onPressed: () {},
+                      child: Text(
+                        welcomeText1,
+                        style: welcomeText1Style,
+                      )),
+                  const SizedBox(
+                    height: 30,
                   ),
-                ),
+                  // boton de iniciar sesion
+                  TextButton(
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: Size(double.infinity, 50)),
+                      onPressed: () {},
+                      child: Text(
+                        welcomeText2,
+                        style: welcomeText2Style,
+                      )),
+                ],
               ),
             )
           ],
